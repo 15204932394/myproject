@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangbin.dao.StudentDao">
+<!-- 查找学生 -->
+	<select id="studentSelect" parameterType="student" resultType="student">
+		select * from student where 1=1
+		<if test="name!=null and ''!=name">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="sex!=null and ''!=sex">
+			and sex = #{sex}
+		</if>
+		<if test="college!=null and ''!=college">
+			and college = #{college}
+		</if>
+		<if test="speciality!=null and ''!=speciality">
+			and speciality = #{speciality}
+		</if>
+	</select>
+	
+<!-- 添加学生 -->
+	<insert id="insertStudent" parameterType="student">
+		insert into student
+		(xs_number,name,age,sex,phone,rx_date,college,speciality)
+		values(#{xs_number},#{name},#{age},#{sex},#{phone},#{rx_date},#{college},#{speciality})
+	</insert>
+	
+	<!-- 根据id查询学生 -->
+	<select id="studentSelectId" parameterType="int" resultType="student">
+		select * from student where id = #{id}
+	</select>
+	
+<!-- 	修改属性 -->
+	<update id="modifyStudent" parameterType="student">
+		update student
+        <set>
+            <if test="xs_number != null">
+                xs_number = #{xs_number},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="rx_date != null">
+                rx_date = #{rx_date},
+            </if>
+            <if test="college != null">
+                phone = #{phone},
+            </if>
+            <if test="college != null">
+                college = #{college},
+            </if>
+            <if test="speciality != null">
+                speciality = #{speciality},
+            </if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	
+	<!-- 根据id删除学生 -->
+	<delete id="deleteStudent" parameterType="int">
+		delete from student where id = #{id}
+	</delete>
+
+</mapper> 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings>
+        <!-- 开启日志，使用log4j日志格式-->
+        <setting name="logImpl" value="LOG4J"/>
+        <!-- 显示开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+	
+	<typeAliases>		
+		<!--使用自动扫描包来定义别名，别名为包中POJO类以首字母小写的非限定类名作为别名  -->
+		<package name="com.zhangbin.pojo"/>
+	</typeAliases>
+</configuration>

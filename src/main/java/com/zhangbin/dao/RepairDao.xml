@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangbin.dao.RepairDao">
+<!-- 查找打扫记录 -->
+	<select id="repairSelect" parameterType="repair" resultType="repair">
+		select * from repair where 1=1
+		<if test=" timees !=null and '' != timees ">
+			and timees = #{timees}
+		</if>
+		<if test=" ss_name !=null and '' != ss_name ">
+			and ss_name like concat('%',#{ss_name},'%')
+		</if>
+		
+		<if test=" name != null and '' != name">
+			and name = #{name}
+		</if>
+		<if test=" situation != null and '' != situation">
+			and situation = #{situation}
+		</if>
+		<if test=" contents != null and '' != contents">
+			and contents = #{contents}
+		</if>
+	</select>
+	
+<!-- 添加打扫记录 -->
+	<insert id="insertRepair" parameterType="repair">
+		insert into repair
+		(timees,ss_name,name,situation,contents)
+		values(#{timees},#{ss_name},#{name},#{situation},#{contents})
+	</insert>
+	
+	<!-- 根据id查询打扫记录 -->
+	<select id="repairSelectId" parameterType="int" resultType="repair">
+		select * from repair where id = #{id}
+	</select>
+	
+<!-- 	修改属性 -->
+	<update id="modifyRepair" parameterType="repair">
+		update repair
+        <set>
+        	<if test="timees != null">
+                timees = #{timees},
+            </if>
+            <if test="ss_name != null">
+                ss_name = #{ss_name},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test=" situation != null and '' != situation">
+				situation = #{situation},
+			</if>
+			<if test=" contents != null and '' != contents">
+				contents = #{contents}
+			</if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	
+	<!-- 根据id删除打扫记录 -->
+	<delete id="deleteRepair" parameterType="int">
+		delete from repair where id = #{id}
+	</delete>
+
+</mapper> 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangbin.dao.ClassesDao">
+<!-- 查找班级 -->
+	<select id="classesSelect" parameterType="classes" resultType="classes">
+		select * from classes where 1=1
+		<if test="name!=null and ''!=name">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="bj_number!=null and ''!=bj_number">
+			and bj_number = #{bj_number}
+		</if>
+		<if test="lists !=null and ''!= lists">
+			and lists like concat('%',#{lists},'%')
+		</if>
+	</select>
+	
+<!-- 添加学生 -->
+	<insert id="insertClasses" parameterType="classes">
+		insert into classes
+		(name,bj_number,lists)
+		values(#{name},#{bj_number},#{lists})
+	</insert>
+	
+	<!-- 根据id查询学生 -->
+	<select id="classesSelectId" parameterType="int" resultType="classes">
+		select * from classes where id = #{id}
+	</select>
+	
+<!-- 	修改属性 -->
+	<update id="modifyClasses" parameterType="classes">
+		update classes
+        <set>
+        <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="bj_number != null">
+                bj_number = #{bj_number},
+            </if>
+            <if test=" lists != null">
+                lists = #{lists},
+            </if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	
+	<!-- 根据id删除学生 -->
+	<delete id="deleteClasses" parameterType="int">
+		delete from classes where id = #{id}
+	</delete>
+
+</mapper> 

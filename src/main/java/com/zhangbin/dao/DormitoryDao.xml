@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangbin.dao.DormitoryDao">
+<!-- 查找宿舍 -->
+	<select id="dormitorySelect" parameterType="dormitory" resultType="dormitory">
+		select * from dormitory where 1=1
+		<if test="name!=null and '' !=name">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="sex!=null and ''!=sex">
+			and sex = #{sex}
+		</if>
+		<if test=" yd_number != null and '' != yd_number">
+			and yd_number = #{yd_number}
+		</if>
+	</select>
+	
+<!-- 添加宿舍 -->
+	<insert id="insertDormitory" parameterType="dormitory">
+		insert into dormitory
+		(name,sex,yd_number,sd_number)
+		values(#{name},#{sex},#{yd_number},#{sd_number})
+	</insert>
+	
+	<!-- 根据id查询宿舍 -->
+	<select id="dormitorySelectId" parameterType="int" resultType="dormitory">
+		select * from dormitory where id = #{id}
+	</select>
+	
+<!-- 	修改属性 -->
+	<update id="modifyDormitory" parameterType="dormitory">
+		update dormitory
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="yd_number != null">
+                yd_number = #{yd_number},
+            </if>
+            <if test="sd_number != null">
+                sd_number = #{sd_number},
+            </if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	
+	<!-- 根据id删除宿舍 -->
+	<delete id="deleteDormitory" parameterType="int">
+		delete from dormitory where id = #{id}
+	</delete>
+
+</mapper> 

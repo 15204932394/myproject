@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangbin.dao.UserDao">
+
+	<!-- 实现用户信息的添加 -->
+	<insert id="insertPerson" parameterType="user">
+		insert into
+		user(username,password,name,sex,age,position,phone,email)
+		values(#{username},#{password},#{name},#{sex},#{age},#{position},#{phone},#{email})
+	</insert>
+	
+	<!-- 根据id查询用户 -->
+	<select id="userSelectId" parameterType="int" resultType="user">
+		select * from user where id = #{id}
+	</select>
+	
+	<!-- 用户登录 -->
+	<select id="checkLogin" parameterType="user" resultType="user">
+		select * from user 
+		where username = #{username}  and password = #{password}
+	</select>
+	
+	<!-- 查找用户 -->
+	<select id="userSelect" parameterType="user" resultType="user">
+		select * from user where 1=1
+		<if test="username!=null and ''!=username">
+			and username like concat('%',#{username},'%')
+		</if>
+		<if test="name!=null and ''!=name">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="sex!=null and ''!=sex">
+			and sex = #{sex}
+		</if>
+		<if test="position!=null and ''!=position">
+			and position = #{position}
+		</if>
+	</select>
+	
+	<!-- 查询个人信息 -->
+	<select id="gerenSelect" parameterType="user" resultType="user">
+		select * from user 
+		where username = #{username}
+	</select>
+	
+	<!-- 修改密码 -->
+	<update id="modifyPassword" parameterType="user">
+		update user 
+		<set>
+			<if test="password != null">
+				password = #{password}
+			</if>
+		</set>
+		where username = #{username}
+	</update>
+	
+	<!-- 	修改属性 -->
+	<update id="modifyUser" parameterType="user">
+		update user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="position != null">
+                position = #{position},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	<!-- 根据id删除用户 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+</mapper>
